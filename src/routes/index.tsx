@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Sidebar } from "@/components/Sidebar";
 import { Hero } from "@/components/Hero";
-import { WhyUs } from "@/components/WhyUs";
 import { MoreThanWeb } from "@/components/MoreThanWeb";
 import { HowWeWork } from "@/components/HowWeWork";
 import { FeatureExplorer } from "@/components/FeatureExplorer";
@@ -38,7 +37,6 @@ function Page() {
       <Sidebar />
       <main>
         <Hero />
-        <WhyUs />
         <MoreThanWeb />
         <HowWeWork />
         <FeatureExplorer />

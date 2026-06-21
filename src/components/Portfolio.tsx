@@ -72,7 +72,7 @@ export function Portfolio() {
   return (
     <section id="portafolio" className="section-wrap relative" style={{ background: "var(--background)" }}>
       <div className="max-w-6xl">
-        <div className="eyebrow mb-6">Sección 06 — Portafolio</div>
+        <div className="eyebrow mb-6">Sección 05 — Portafolio</div>
         <h2 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl leading-[1.05] tracking-tight">
           Míralo en acción
         </h2>
