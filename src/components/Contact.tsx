@@ -22,7 +22,7 @@ export function Contact() {
   return (
     <section id="contacto" className="section-wrap relative" style={{ background: "var(--background)" }}>
       <div className="max-w-4xl">
-        <div className="eyebrow mb-6">Sección 09 — Contacto</div>
+        <div className="eyebrow mb-6">Sección 08 — Contacto</div>
         <h2 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl leading-[1.05] tracking-tight">
           Empezá por una conversación.
         </h2>
