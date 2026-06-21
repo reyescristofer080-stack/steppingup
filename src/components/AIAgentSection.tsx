@@ -2,14 +2,14 @@ export function AIAgentSection() {
   return (
     <section className="section-wrap relative" style={{ background: "var(--gradient-section)" }}>
       <div className="max-w-5xl">
-        <div className="eyebrow mb-6">Sección 07 — Agente de IA</div>
+        <div className="eyebrow mb-6">Sección 06 — Agente de IA</div>
         <h2 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl leading-[1.05] tracking-tight max-w-3xl">
           Tus clientes no deberían{" "}
           <span className="text-[color:var(--highlight)]">esperar.</span>
         </h2>
 
         <p className="mt-8 max-w-3xl text-lg text-[color:var(--text-soft)] leading-relaxed">
-          Integramos un agente de inteligencia artificial directamente en tu página, adaptado a lo que tu negocio realmente necesita — desde responder preguntas frecuentes hasta agendar citas, tomar reservas o calificar clientes interesados, según el tipo de negocio que tengas. Disponible las 24 horas, todos los días, sin que tus clientes tengan que esperar una respuesta por WhatsApp.
+          Integramos un agente de inteligencia artificial directamente en tu página, adaptado a lo que tu negocio realmente necesita, desde responder preguntas frecuentes hasta agendar citas o cualquiera que sean las necesidades de tu negocio. Disponible las 24 horas del día, todos los días, sin que tus clientes tengan que esperar una respuesta por WhatsApp.
         </p>
 
         <div className="mt-12 flex items-center gap-4 rounded-2xl p-6 border border-[color:var(--border)]" style={{ background: "var(--surface)" }}>

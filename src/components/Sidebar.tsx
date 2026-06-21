@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const sections = [
-  { id: "por-que", label: "Por qué nosotros" },
+  { id: "mas-que-web", label: "Más que una página" },
   { id: "como", label: "Cómo trabajamos" },
   { id: "funciones", label: "Funciones" },
   { id: "portafolio", label: "Portafolio" },
@@ -10,7 +10,7 @@ const sections = [
 ];
 
 export function useActiveSection() {
-  const [active, setActive] = useState<string>("por-que");
+  const [active, setActive] = useState<string>("mas-que-web");
 
   useEffect(() => {
     const handler = () => {

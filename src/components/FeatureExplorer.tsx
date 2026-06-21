@@ -71,7 +71,7 @@ export function FeatureExplorer() {
   return (
     <section id="funciones" className="section-wrap relative" style={{ background: "var(--gradient-section)" }}>
       <div className="max-w-6xl">
-        <div className="eyebrow mb-6">Sección 05 — Funciones</div>
+        <div className="eyebrow mb-6">Sección 04 — Funciones</div>
         <h2 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl leading-[1.05] tracking-tight max-w-3xl">
           Lo que tu sitio puede{" "}
           <span className="text-[color:var(--highlight)]">realmente hacer</span>

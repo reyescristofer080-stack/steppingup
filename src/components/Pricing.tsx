@@ -44,12 +44,12 @@ export function Pricing() {
   return (
     <section id="precios" className="section-wrap relative" style={{ background: "var(--background)" }}>
       <div className="max-w-6xl">
-        <div className="eyebrow mb-6">Sección 08 — Precios</div>
+        <div className="eyebrow mb-6">Sección 07 — Precios</div>
         <h2 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl leading-[1.05] tracking-tight">
           Planes por etapa, no por tamaño.
         </h2>
         <p className="mt-6 max-w-3xl text-[color:var(--text-soft)] leading-relaxed">
-          El plan Emprendimiento ya incluye todo lo fundamental para que tu negocio empiece a crecer en línea, sin importar qué tan nuevo sea. Los niveles superiores existen para negocios que ya tienen más operación o necesidades más específicas — no porque el primero esté incompleto.
+          El plan Emprendimiento te ofrece todo lo necesario para obtener tu página web lista y funcional para que tu negocio empiece a crecer en línea. Los niveles superiores existen para negocios que manejan volúmenes de operación más robustos o que ya tienen una presencia en línea considerable.
         </p>
 
         <div className="mt-14 grid lg:grid-cols-3 gap-5">

@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const stats = [
   { num: "1.8x", text: "Un perfil de Google optimizado convierte casi el doble que uno desactualizado" },
   { num: "58%", text: "Los negocios con reseñas activas en varias plataformas generan en promedio 58% más ingresos" },
@@ -11,18 +13,45 @@ const marketPoints = [
   "Tener el perfil de Google Negocio incompleto sigue siendo de los errores más comunes entre negocios locales, a pesar de ser gratuito y de alto impacto inmediato.",
 ];
 
+function StatCard({ num, text }: { num: string; text: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+      onClick={() => setOpen((v) => !v)}
+      className="cursor-pointer rounded-xl p-6 border border-[color:var(--border)] bg-[color:var(--surface)] hover:border-[color:var(--bright)] transition-colors"
+    >
+      <div
+        className="font-display font-bold text-4xl md:text-5xl bg-clip-text text-transparent"
+        style={{ backgroundImage: "var(--gradient-accent)" }}
+      >
+        {num}
+      </div>
+      <div
+        className="grid transition-all duration-300 ease-out"
+        style={{ gridTemplateRows: open ? "1fr" : "0fr", marginTop: open ? "0.75rem" : "0" }}
+      >
+        <div className="overflow-hidden">
+          <div className="text-sm text-[color:var(--text-soft)] leading-relaxed">{text}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function MoreThanWeb() {
   return (
-    <section className="section-wrap relative" style={{ background: "var(--gradient-section)" }}>
+    <section id="mas-que-web" className="section-wrap relative" style={{ background: "var(--gradient-section)" }}>
       <div className="max-w-6xl">
-        <div className="eyebrow mb-6">Sección 03 — Más que una página</div>
+        <div className="eyebrow mb-6">Sección 02 — Más que una página</div>
         <h2 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl leading-[1.05] tracking-tight max-w-4xl">
           Construimos tu página.{" "}
           <span className="text-[color:var(--highlight)]">Después, caminamos contigo.</span>
         </h2>
 
         <p className="mt-8 max-w-3xl text-lg text-[color:var(--text-soft)] leading-relaxed">
-          La mayoría de las agencias entregan tu página web y desaparecen. Nosotros no. Una vez que tu sitio está en línea, seguimos trabajando contigo para que realmente atraiga clientes, los convierta, y construya la reputación de tu negocio con el tiempo.
+          La mayoría de las agencias entregan tu página web y desaparecen, nosotros no. Una vez que tu sitio está en línea, seguimos trabajando de la mano contigo para que realmente le saques provecho a la página, atraigas nuevos clientes, y le sumes prestigio a tu negocio.
         </p>
 
         {/* Market context */}
@@ -31,7 +60,7 @@ export function MoreThanWeb() {
           style={{ background: "var(--gradient-card)" }}
         >
           <h3 className="font-display text-xl md:text-2xl font-semibold">
-            Lo que está pasando con los negocios en Costa Rica
+            La problemática de muchos emprendimientos y negocios en Costa Rica
           </h3>
           <ul className="mt-6 space-y-4">
             {marketPoints.map((p, i) => (
@@ -46,42 +75,24 @@ export function MoreThanWeb() {
           </p>
         </div>
 
-        {/* Stats grid */}
+        {/* Stats grid - dropdown cards */}
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {stats.map((s) => (
-            <div
-              key={s.num}
-              className="rounded-xl p-6 border border-[color:var(--border)] bg-[color:var(--surface)] hover:border-[color:var(--bright)] transition-colors"
-            >
-              <div
-                className="font-display font-bold text-4xl md:text-5xl bg-clip-text text-transparent"
-                style={{ backgroundImage: "var(--gradient-accent)" }}
-              >
-                {s.num}
-              </div>
-              <div className="mt-3 text-sm text-[color:var(--text-soft)] leading-relaxed">{s.text}</div>
-            </div>
+            <StatCard key={s.num} num={s.num} text={s.text} />
           ))}
         </div>
 
         {/* Illustrative example */}
-        <div className="mt-12 grid md:grid-cols-[1fr_2fr] gap-6 items-start">
-          <div>
-            <div className="eyebrow mb-2">Ejemplo</div>
-            <h3 className="font-display text-2xl font-semibold">Un ejemplo típico</h3>
-          </div>
-          <p className="text-[color:var(--text-soft)] leading-relaxed border-l-2 border-[color:var(--mid)] pl-6">
+        <div className="mt-12">
+          <p className="text-[color:var(--text-soft)] leading-relaxed border-l-2 border-[color:var(--mid)] pl-6 max-w-4xl">
             Un emprendimiento o empresa que invierte en una página profesional, un perfil de Google bien gestionado, un sistema de reseñas activo, así como un agente personalizado de Inteligencia Artificial para su negocio, normalmente ve no solo más clientela sino que proyecta mayor confianza y genera clientela más leal a lo largo del tiempo que negocios similares que no se toman el tiempo de explotar todo su potencial.
           </p>
         </div>
 
-        {/* Agency explainer */}
+        {/* Closing block */}
         <div className="mt-16 max-w-3xl text-[color:var(--text-soft)] leading-relaxed">
           <p>
-            Somos una agencia digital. Eso significa que tu página web es solo el punto de partida — detrás de ella construimos todo lo que tu negocio necesita para crecer en línea de forma sostenida: presencia en Google, reputación, automatización, y un equipo que sigue ahí después del lanzamiento.
-          </p>
-          <p className="mt-6 text-[color:var(--foreground)] font-display text-xl md:text-2xl leading-snug">
-            Esa es la diferencia entre tener una página web, y tener un sistema que trabaja para tu negocio todos los días.
+            Como agencia digital, no nos limitamos a construir tu página web, sino que detrás de ella construimos todo lo que tu negocio necesita para crecer en línea de forma sostenida: presencia en Google Maps, imagen de marca, automatización de procesos que antes parecían complicados y hasta contenido para redes sociales según tus necesidades específicas.
           </p>
         </div>
       </div>
