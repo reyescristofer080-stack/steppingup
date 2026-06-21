@@ -26,8 +26,11 @@ export function HowWeWork() {
     <section id="como" className="section-wrap relative" style={{ background: "var(--background)" }}>
       <div className="max-w-6xl">
         <div className="eyebrow mb-6">Sección 03 — Proceso</div>
+        <p className="text-lg text-[color:var(--text-soft)] leading-relaxed max-w-3xl mb-8">
+          Como agencia digital, no nos limitamos a construir tu página web, sino que detrás de ella construimos todo lo que tu negocio necesita para crecer en línea de forma sostenida: presencia en Google Maps, imagen de marca, automatización de procesos que antes parecían complicados y hasta contenido para redes sociales según tus necesidades específicas.
+        </p>
         <h2 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl leading-[1.05] tracking-tight max-w-3xl">
-          Así es como funciona
+          Así es como funciona:
         </h2>
 
         <div className="mt-16 relative">

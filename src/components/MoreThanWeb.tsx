@@ -89,12 +89,6 @@ export function MoreThanWeb() {
           </p>
         </div>
 
-        {/* Closing block */}
-        <div className="mt-16 max-w-3xl text-[color:var(--text-soft)] leading-relaxed">
-          <p>
-            Como agencia digital, no nos limitamos a construir tu página web, sino que detrás de ella construimos todo lo que tu negocio necesita para crecer en línea de forma sostenida: presencia en Google Maps, imagen de marca, automatización de procesos que antes parecían complicados y hasta contenido para redes sociales según tus necesidades específicas.
-          </p>
-        </div>
       </div>
     </section>
   );
