@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 
 const phrases = [
-  "Your customers",
-  "Your business",
-  "Your image towards the world",
-  "The prestige of your business",
+  "Tu negocio",
+  "Tus clientes",
+  "Tu imagen de cara al mundo",
 ];
 
 export function Hero() {
