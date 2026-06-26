@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { businessTypes, type BusinessKey } from "./FeatureExplorer";
+import { supabase } from "@/integrations/supabase/client";
 
 export function Contact() {
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({
     nombre: "",
     negocio: "",
@@ -11,8 +14,34 @@ export function Contact() {
     mensaje: "",
   });
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+
+    const nombre = form.nombre.trim();
+    const negocio = form.negocio.trim();
+    const correo = form.correo.trim();
+    const mensaje = form.mensaje.trim();
+
+    if (!nombre || nombre.length > 100) return setError("Ingresá un nombre válido (máx. 100 caracteres).");
+    if (!negocio || negocio.length > 150) return setError("Ingresá el nombre del negocio (máx. 150 caracteres).");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo) || correo.length > 255) return setError("Ingresá un correo válido.");
+    if (mensaje.length > 2000) return setError("El mensaje es demasiado largo (máx. 2000 caracteres).");
+
+    setLoading(true);
+    const { error: insertError } = await supabase.from("contact_submissions").insert({
+      nombre,
+      negocio,
+      tipo: form.tipo,
+      correo,
+      mensaje: mensaje || null,
+    });
+    setLoading(false);
+
+    if (insertError) {
+      setError("No pudimos enviar tu mensaje. Intentá de nuevo en unos segundos.");
+      return;
+    }
     setSent(true);
   };
 
@@ -45,11 +74,11 @@ export function Contact() {
           <form onSubmit={submit} className="mt-12 grid sm:grid-cols-2 gap-4">
             <div className="sm:col-span-1">
               <label className="block text-xs uppercase tracking-widest text-[color:var(--text-soft)] mb-2">Nombre</label>
-              <input required value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} className={input} placeholder="Tu nombre" />
+              <input required maxLength={100} value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} className={input} placeholder="Tu nombre" />
             </div>
             <div className="sm:col-span-1">
               <label className="block text-xs uppercase tracking-widest text-[color:var(--text-soft)] mb-2">Nombre del negocio</label>
-              <input required value={form.negocio} onChange={(e) => setForm({ ...form, negocio: e.target.value })} className={input} placeholder="Ej. Clínica San Pedro" />
+              <input required maxLength={150} value={form.negocio} onChange={(e) => setForm({ ...form, negocio: e.target.value })} className={input} placeholder="Ej. Clínica San Pedro" />
             </div>
             <div className="sm:col-span-1">
               <label className="block text-xs uppercase tracking-widest text-[color:var(--text-soft)] mb-2">Tipo de negocio</label>
@@ -61,15 +90,18 @@ export function Contact() {
             </div>
             <div className="sm:col-span-1">
               <label className="block text-xs uppercase tracking-widest text-[color:var(--text-soft)] mb-2">Correo</label>
-              <input required type="email" value={form.correo} onChange={(e) => setForm({ ...form, correo: e.target.value })} className={input} placeholder="tucorreo@ejemplo.com" />
+              <input required type="email" maxLength={255} value={form.correo} onChange={(e) => setForm({ ...form, correo: e.target.value })} className={input} placeholder="tucorreo@ejemplo.com" />
             </div>
             <div className="sm:col-span-2">
               <label className="block text-xs uppercase tracking-widest text-[color:var(--text-soft)] mb-2">Mensaje</label>
-              <textarea rows={5} value={form.mensaje} onChange={(e) => setForm({ ...form, mensaje: e.target.value })} className={input} placeholder="Contanos brevemente qué necesitás" />
+              <textarea rows={5} maxLength={2000} value={form.mensaje} onChange={(e) => setForm({ ...form, mensaje: e.target.value })} className={input} placeholder="Contanos brevemente qué necesitás" />
             </div>
+            {error && (
+              <div className="sm:col-span-2 text-sm text-red-400">{error}</div>
+            )}
             <div className="sm:col-span-2 mt-2">
-              <button type="submit" className="btn-primary w-full sm:w-auto justify-center">
-                Agenda tu llamada gratis
+              <button type="submit" disabled={loading} className="btn-primary w-full sm:w-auto justify-center disabled:opacity-60">
+                {loading ? "Enviando..." : "Agenda tu llamada gratis"}
               </button>
             </div>
           </form>
