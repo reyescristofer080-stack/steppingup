@@ -25,7 +25,7 @@ const tiers = [
     featured: true,
   },
   {
-    name: "Negocio establecido",
+    name: "Paquete Corporativo",
     description: "Para negocios con más operación o necesidades muy específicas.",
     features: [
       "Todo lo del plan Mediana empresa",
