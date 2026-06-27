@@ -1,57 +1,49 @@
 ## Objetivo
+Cada vez que alguien envíe el formulario de Contacto, recibir un email en `steppingup.business@gmail.com` con los datos del nuevo lead.
 
-Que cada vez que alguien envíe el formulario de Contacto del sitio, llegue automáticamente un email de notificación a **steppingup.business@gmail.com** con los datos del envío.
+## Alcance
+- Usar el dominio de envío que Lovable asigne por defecto (sin necesidad de dominio propio).
+- Notificación transaccional (no marketing) dirigida únicamente al administrador.
+- No cambiar la UX del formulario; mantener los estados de éxito/error actuales.
 
-## Cómo va a funcionar (visión del usuario)
+## Plan de implementación
 
-1. Un visitante llena el formulario de Contacto y presiona enviar.
-2. Sus datos se guardan en la base de datos (esto ya funciona hoy).
-3. En segundos, llega un correo a tu bandeja de `steppingup.business@gmail.com` con el asunto tipo *"Nuevo contacto: [nombre] — [negocio]"* y el contenido del formulario formateado de manera clara.
-4. Podés responderle directo desde Gmail al correo del cliente (el botón "Responder" apunta al email que él ingresó).
+### 1. Dominio de envío
+- Completar el setup de dominio de email en Lovable mediante el diálogo correspondiente.
+- Esto habilita el remitente desde el cual saldrán las notificaciones (gestionado por Lovable, sin costo de dominio propio).
 
-## Qué necesito de vos (paso único)
+### 2. Infraestructura de email
+- Instalar los paquetes requeridos: `@lovable.dev/email-js`, `@lovable.dev/webhooks-js`, `@react-email/components`, `react-email`.
+- Ejecutar la configuración de infraestructura de Lovable Emails (colas, tablas de log, cron de procesamiento).
+- Ejecutar el scaffold de emails transaccionales para generar las rutas de envío (`/lovable/email/transactional/send`, preview, unsubscribe) y la estructura base de plantillas.
 
-Configurar un **dominio remitente**. Esto define desde qué dirección sale el email (ej. `notify@steppingup.com`). Es necesario porque enviar desde un dominio verificado:
-- Evita que Gmail lo marque como spam.
-- Le da legitimidad al correo (no llega como "noreply@servicio-genérico.com").
+### 3. Plantilla de notificación de contacto
+- Crear `src/lib/email-templates/contact-notification.tsx` con diseño limpio y profesional que muestre:
+  - Nombre, negocio, tipo de negocio, correo y mensaje del remitente.
+  - Subject: "Nuevo contacto desde Stepping Up".
+- Registrar la plantilla en `src/lib/email-templates/registry.ts`.
+- Aplicar el estilo visual del sitio (colores oscuros del branding en acentos, body blanco para compatibilidad de clientes de correo).
 
-El proceso es guiado: Lovable te muestra unos registros DNS para agregar donde tengas registrado el dominio. Una vez agregados, el sistema verifica automáticamente (puede tardar minutos a horas).
+### 4. Endpoint de envío del formulario
+- Dado que el formulario es público y no requiere login, crear un server function público (o server route) que:
+  1. Valide los campos del formulario con Zod.
+  2. Inserte el registro en `contact_submissions` (ya existente).
+  3. Envíe el email de notificación internamente usando credenciales de servicio, dirigido a `steppingup.business@gmail.com`.
+- Esto evita exponer el endpoint de email transaccional directamente al navegador sin autenticación.
 
-Si todavía no tenés un dominio propio para Stepping Up, podemos coordinar ese paso primero. Si ya lo tenés, abrimos el diálogo de configuración y seguimos.
+### 5. Integración con el frontend
+- Actualizar `src/components/Contact.tsx` para que, en lugar de insertar directamente a Supabase desde el cliente, llame al nuevo server function.
+- Mantener los estados de `loading`, `sent` y `error` exactamente como funcionan hoy.
 
-## Qué hago yo (automatizado, sin que toques nada)
+### 6. Verificación
+- Realizar un envío de prueba desde el formulario en preview.
+- Confirmar que `email_send_log` registra el intento y que el estado es `sent`.
+- Validar que el correo llega a `steppingup.business@gmail.com` con los datos completos.
 
-1. **Infraestructura de correo:** activo el sistema de envío de Lovable Emails (colas, reintentos, registros de envío).
-2. **Plantilla del correo:** diseño la plantilla del email de notificación con el branding del sitio — fondo limpio, tipografía Manrope/Inter, los datos del contacto bien organizados, y un botón directo de "Responder al cliente".
-3. **Disparo automático:** modifico el flujo del formulario de Contacto para que, justo después de guardar el envío en la base de datos, dispare el email a tu dirección.
-4. **Robustez:** si por alguna razón el email falla, el envío en la base de datos no se pierde — siempre tenés el respaldo en el panel.
+## Notas técnicas
+- El flujo de envío usará la cola de emails transaccionales de Lovable (pgmq), que maneja reintentos automáticos.
+- No se requiere autenticación del usuario final; el email se envía como acción del sistema tras la recepción del formulario.
+- El unsubscribe footer se añade automáticamente por la infraestructura; no se incluye en la plantilla.
 
-## Costos / créditos
-
-- El envío en sí consume aproximadamente **1 crédito por cada ~250 emails** (4 créditos por mil), del pool mensual gratuito de Lovable Cloud que ya tenés activo.
-- Para el volumen típico de un formulario de contacto de agencia, el consumo es prácticamente nulo.
-- No hay servicios externos, no hay claves de API que gestionar, no hay suscripciones adicionales.
-
-## Orden de ejecución
-
-```text
-1. Vos: completar configuración del dominio remitente (diálogo guiado)
-        ↓
-2. Yo: activar infraestructura de emails
-        ↓
-3. Yo: crear plantilla de notificación con el branding
-        ↓
-4. Yo: conectar el formulario al disparo del email
-        ↓
-5. Prueba: enviar un contacto de prueba para confirmar que llega
-```
-
-## Lo que NO cambia
-
-- El formulario de Contacto sigue viéndose y funcionando igual para el visitante.
-- Los datos siguen guardándose en la base de datos como hasta ahora.
-- Ninguna otra sección del sitio se toca.
-
----
-
-**Antes de implementar:** ¿tenés ya un dominio propio para Stepping Up que podamos usar como remitente, o necesitás orientación sobre ese paso primero?
+## Post-implementación sugerida
+- Una vez operativo, se puede ofrecer construir un panel interno (ruta protegida) para visualizar el log de emails enviados desde la base de datos si se necesita trazabilidad centralizada.
