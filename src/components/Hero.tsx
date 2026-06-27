@@ -18,6 +18,7 @@ export function Hero() {
 
   return (
     <section
+      id="inicio"
       className="relative min-h-screen flex items-center section-wrap overflow-hidden"
       style={{ background: "var(--gradient-hero)" }}
     >

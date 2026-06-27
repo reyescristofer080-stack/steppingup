@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 const sections = [
+  { id: "inicio", label: "Inicio" },
   { id: "mas-que-web", label: "Más que una página" },
   { id: "como", label: "Cómo trabajamos" },
   { id: "funciones", label: "Funciones" },
