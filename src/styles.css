@@ -189,3 +189,13 @@
 @utility animate-pulse-glow {
   animation: pulse-glow 2s infinite;
 }
+
+@keyframes hero-slide-in {
+  0% { transform: translateX(110%); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+@utility animate-hero-slide-in {
+  animation: hero-slide-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
