@@ -191,11 +191,13 @@
 }
 
 @keyframes hero-slide-in {
-  0% { transform: translateX(110%); opacity: 0; }
-  100% { transform: translateX(0); opacity: 1; }
+  0%   { transform: translate(110%, 33%); opacity: 0; }
+  60%  { opacity: 1; }
+  85%  { transform: translate(-3%, 33%); }
+  100% { transform: translate(0, 33%); }
 }
 
 @utility animate-hero-slide-in {
-  animation: hero-slide-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: hero-slide-in 3s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
