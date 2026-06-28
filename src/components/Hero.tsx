@@ -57,7 +57,7 @@ export function Hero() {
       />
 
 
-      <div className="relative max-w-4xl">
+      <div className="relative z-10 max-w-4xl">
         <div className="eyebrow mb-6">Agencia digital · Costa Rica</div>
 
         <h1 className="font-display font-bold text-5xl sm:text-6xl md:text-7xl leading-[1.05] tracking-tight">
