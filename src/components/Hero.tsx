@@ -24,6 +24,28 @@ export function Hero() {
       className="relative min-h-screen flex items-center section-wrap overflow-hidden"
       style={{ background: "var(--gradient-hero)" }}
     >
+      {/* Animated globe background — slides in from right on load, contained within Hero */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-y-0 right-0 w-2/3 pointer-events-none animate-hero-slide-in"
+      >
+        <img
+          src={heroGlobe}
+          alt=""
+          width={1280}
+          height={1280}
+          className="w-full h-full object-cover object-center opacity-60"
+        />
+        {/* Legibility overlay: fades image into hero background on the left edge */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(90deg, #000000 0%, rgba(0,0,0,0.6) 30%, rgba(0,37,42,0.3) 60%, transparent 100%)",
+          }}
+        />
+      </div>
+
       {/* ambient orb */}
       <div
         className="absolute bottom-[-15%] right-[-10%] w-[60vw] h-[60vw] rounded-full opacity-50 pointer-events-none"
@@ -33,6 +55,7 @@ export function Hero() {
         className="absolute top-1/3 left-1/2 w-[2px] h-32 opacity-30 hidden md:block"
         style={{ background: "linear-gradient(180deg, var(--highlight), transparent)" }}
       />
+
 
       <div className="relative max-w-4xl">
         <div className="eyebrow mb-6">Agencia digital · Costa Rica</div>
