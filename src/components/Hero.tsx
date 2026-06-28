@@ -28,8 +28,7 @@ export function Hero() {
       <div
         aria-hidden="true"
         className="absolute right-0 bottom-0 w-[66%] aspect-square pointer-events-none animate-hero-slide-in"
-        style={{ transform: "translateY(33%)" }}
-      >
+
         <img
           src={heroGlobe}
           alt=""
