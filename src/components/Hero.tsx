@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import heroGlobe from "@/assets/hero-globe.jpg";
+
 
 const phrases = [
   "Tu negocio",
