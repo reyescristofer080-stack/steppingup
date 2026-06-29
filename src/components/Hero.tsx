@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import heroGlobe from "@/assets/hero-globe.jpg";
+import heroBg from "@/assets/hero-bg.jpg";
 
 
 const phrases = [
@@ -22,38 +22,22 @@ export function Hero() {
     <section
       id="inicio"
       className="relative min-h-screen flex items-center section-wrap overflow-hidden"
-      style={{ background: "var(--gradient-hero)" }}
+      style={{
+        backgroundColor: "#000000",
+        backgroundImage: `url(${heroBg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "right center",
+        backgroundRepeat: "no-repeat",
+      }}
     >
-      {/* Globe background — anchored bottom-right, partly off-canvas */}
+      {/* Subtle left-side darkening to reinforce text legibility */}
       <div
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none animate-hero-slide-in"
-      >
-        <img
-          src={heroGlobe}
-          alt=""
-          width={1280}
-          height={1280}
-          className="absolute -bottom-[15%] -right-[10%] w-[85%] max-w-[1100px] aspect-square object-contain opacity-90"
-        />
-        {/* Legibility overlay: fades image into hero background on the left edge */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(90deg, #000000 0%, rgba(0,0,0,0.85) 25%, rgba(0,0,0,0.4) 50%, transparent 75%)",
-          }}
-        />
-      </div>
-
-      {/* ambient orb */}
-      <div
-        className="absolute bottom-[-15%] right-[-10%] w-[60vw] h-[60vw] rounded-full opacity-50 pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(0,170,195,0.35) 0%, transparent 60%)" }}
-      />
-      <div
-        className="absolute top-1/3 left-1/2 w-[2px] h-32 opacity-30 hidden md:block"
-        style={{ background: "linear-gradient(180deg, var(--highlight), transparent)" }}
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.55) 35%, rgba(0,0,0,0.15) 60%, transparent 80%)",
+        }}
       />
 
 
