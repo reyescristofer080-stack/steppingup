@@ -196,6 +196,6 @@
 }
 
 @utility animate-hero-slide-in {
-  animation: hero-slide-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: hero-slide-in 3.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
