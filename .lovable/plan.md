@@ -1,49 +1,29 @@
-## Objetivo
-Cada vez que alguien envíe el formulario de Contacto, recibir un email en `steppingup.business@gmail.com` con los datos del nuevo lead.
+## Problema
 
-## Alcance
-- Usar el dominio de envío que Lovable asigne por defecto (sin necesidad de dominio propio).
-- Notificación transaccional (no marketing) dirigida únicamente al administrador.
-- No cambiar la UX del formulario; mantener los estados de éxito/error actuales.
+La imagen actual (`hero-globe.jpg`) es un recorte cuadrado del globo sobre su propio fondo. Al posicionarla absolutamente en el Hero, sus bordes superior e izquierdo quedan visibles como una "caja" pegada encima del fondo de la sección. Ningún overlay con gradiente arregla esto porque el problema es la imagen misma, no el CSS.
 
-## Plan de implementación
+## Solución
 
-### 1. Dominio de envío
-- Completar el setup de dominio de email en Lovable mediante el diálogo correspondiente.
-- Esto habilita el remitente desde el cual saldrán las notificaciones (gestionado por Lovable, sin costo de dominio propio).
+Reemplazar la imagen por un **background art a sangre completa** ya compuesto: un lienzo ancho con el mismo color de fondo que el Hero (`#0a1628` / dark navy del sitio), con el globo wireframe integrado orgánicamente hacia la derecha y desvaneciéndose hacia la izquierda y los bordes mediante el propio render — sin bordes duros.
 
-### 2. Infraestructura de email
-- Instalar los paquetes requeridos: `@lovable.dev/email-js`, `@lovable.dev/webhooks-js`, `@react-email/components`, `react-email`.
-- Ejecutar la configuración de infraestructura de Lovable Emails (colas, tablas de log, cron de procesamiento).
-- Ejecutar el scaffold de emails transaccionales para generar las rutas de envío (`/lovable/email/transactional/send`, preview, unsubscribe) y la estructura base de plantillas.
+### Pasos
 
-### 3. Plantilla de notificación de contacto
-- Crear `src/lib/email-templates/contact-notification.tsx` con diseño limpio y profesional que muestre:
-  - Nombre, negocio, tipo de negocio, correo y mensaje del remitente.
-  - Subject: "Nuevo contacto desde Stepping Up".
-- Registrar la plantilla en `src/lib/email-templates/registry.ts`.
-- Aplicar el estilo visual del sitio (colores oscuros del branding en acentos, body blanco para compatibilidad de clientes de correo).
+1. **Generar nueva imagen** `src/assets/hero-bg.jpg` (1920×1024) con prompt dirigido:
+   - Fondo dark navy uniforme idéntico al del sitio.
+   - Globo wireframe cyan/teal anclado al cuadrante inferior-derecho.
+   - Bordes de la imagen ya fundidos al negro/navy (vignette pintada dentro de la imagen, no por CSS).
+   - Sin marca de agua, sin elementos sueltos.
 
-### 4. Endpoint de envío del formulario
-- Dado que el formulario es público y no requiere login, crear un server function público (o server route) que:
-  1. Valide los campos del formulario con Zod.
-  2. Inserte el registro en `contact_submissions` (ya existente).
-  3. Envíe el email de notificación internamente usando credenciales de servicio, dirigido a `steppingup.business@gmail.com`.
-- Esto evita exponer el endpoint de email transaccional directamente al navegador sin autenticación.
+2. **Actualizar `src/components/Hero.tsx`**:
+   - Cambiar import a `hero-bg.jpg`.
+   - Aplicar como `background-image` de toda la sección (cover, right-center) en lugar de un `<img>` posicionado.
+   - Eliminar el overlay gradient actual (ya no hace falta porque el fade vive dentro de la imagen). Mantener solo un sutil `bg-background/40` sobre el área del texto si hiciera falta para contraste.
+   - Conservar la animación `animate-hero-slide-in` aplicándola al contenedor del background, no a un `<img>` recortado.
 
-### 5. Integración con el frontend
-- Actualizar `src/components/Contact.tsx` para que, en lugar de insertar directamente a Supabase desde el cliente, llame al nuevo server function.
-- Mantener los estados de `loading`, `sent` y `error` exactamente como funcionan hoy.
+3. **Eliminar** el asset viejo `src/assets/hero-globe.jpg`.
 
-### 6. Verificación
-- Realizar un envío de prueba desde el formulario en preview.
-- Confirmar que `email_send_log` registra el intento y que el estado es `sent`.
-- Validar que el correo llega a `steppingup.business@gmail.com` con los datos completos.
+4. **Verificar** que en mobile (≤640px) el globo no compita con el texto: usar `background-position: 120% center` en breakpoints pequeños para correrlo fuera de vista o reducir opacidad.
 
-## Notas técnicas
-- El flujo de envío usará la cola de emails transaccionales de Lovable (pgmq), que maneja reintentos automáticos.
-- No se requiere autenticación del usuario final; el email se envía como acción del sistema tras la recepción del formulario.
-- El unsubscribe footer se añade automáticamente por la infraestructura; no se incluye en la plantilla.
+### Resultado esperado
 
-## Post-implementación sugerida
-- Una vez operativo, se puede ofrecer construir un panel interno (ruta protegida) para visualizar el log de emails enviados desde la base de datos si se necesita trazabilidad centralizada.
+El globo se ve como parte del fondo de la sección, sin caja ni bordes visibles, fundiéndose naturalmente con el dark navy del resto del Hero.
