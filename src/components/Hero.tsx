@@ -24,24 +24,24 @@ export function Hero() {
       className="relative min-h-screen flex items-center section-wrap overflow-hidden"
       style={{ background: "var(--gradient-hero)" }}
     >
-      {/* Animated globe background — slides in from right on load, contained within Hero */}
+      {/* Globe background — anchored bottom-right, partly off-canvas */}
       <div
         aria-hidden="true"
-        className="absolute inset-y-0 right-0 w-2/3 pointer-events-none animate-hero-slide-in"
+        className="absolute inset-0 pointer-events-none animate-hero-slide-in"
       >
         <img
           src={heroGlobe}
           alt=""
           width={1280}
           height={1280}
-          className="w-full h-full object-cover object-center opacity-60"
+          className="absolute -bottom-[15%] -right-[10%] w-[85%] max-w-[1100px] aspect-square object-contain opacity-90"
         />
         {/* Legibility overlay: fades image into hero background on the left edge */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(90deg, #000000 0%, rgba(0,0,0,0.6) 30%, rgba(0,37,42,0.3) 60%, transparent 100%)",
+              "linear-gradient(90deg, #000000 0%, rgba(0,0,0,0.85) 25%, rgba(0,0,0,0.4) 50%, transparent 75%)",
           }}
         />
       </div>
