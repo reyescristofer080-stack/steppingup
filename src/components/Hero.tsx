@@ -22,18 +22,24 @@ export function Hero() {
     <section
       id="inicio"
       className="relative min-h-screen flex items-center section-wrap overflow-hidden"
-      style={{
-        backgroundColor: "#000000",
-        backgroundImage: `url(${heroBg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "right center",
-        backgroundRepeat: "no-repeat",
-      }}
+      style={{ backgroundColor: "#000000" }}
     >
+      {/* Animated background — slides in slowly from the right */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 animate-hero-slide-in"
+        style={{
+          backgroundImage: `url(${heroBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "right center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+
       {/* Subtle left-side darkening to reinforce text legibility */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none animate-hero-slide-in"
+        className="absolute inset-0 pointer-events-none"
         style={{
           background:
             "linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.55) 35%, rgba(0,0,0,0.15) 60%, transparent 80%)",
