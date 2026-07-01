@@ -82,12 +82,6 @@ export function MoreThanWeb() {
           ))}
         </div>
 
-        {/* Illustrative example */}
-        <div className="mt-12">
-          <p className="text-[color:var(--text-soft)] leading-relaxed border-l-2 border-[color:var(--mid)] pl-6 max-w-4xl">
-            Un emprendimiento o empresa que invierte en una página profesional, un perfil de Google bien gestionado, un sistema de reseñas activo, así como un agente personalizado de Inteligencia Artificial para su negocio, normalmente ve no solo más clientela sino que proyecta mayor confianza y genera clientela más leal a lo largo del tiempo que negocios similares que no se toman el tiempo de explotar todo su potencial.
-          </p>
-        </div>
 
       </div>
     </section>
