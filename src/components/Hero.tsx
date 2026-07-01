@@ -24,14 +24,26 @@ export function Hero() {
       className="relative min-h-screen flex items-center section-wrap overflow-hidden"
       style={{ backgroundColor: "#000000" }}
     >
-      {/* Animated background — slides in slowly from the right */}
+      {/* Desktop: slides in from the right */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 animate-hero-slide-in"
+        className="absolute inset-0 hidden lg:block animate-hero-slide-in"
         style={{
           backgroundImage: `url(${heroBg})`,
           backgroundSize: "cover",
           backgroundPosition: "right center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+
+      {/* Mobile / Tablet: slides in from the bottom */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 lg:hidden animate-hero-slide-in-bottom"
+        style={{
+          backgroundImage: `url(${heroBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center bottom",
           backgroundRepeat: "no-repeat",
         }}
       />

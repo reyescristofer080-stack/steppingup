@@ -195,7 +195,16 @@
   100% { transform: translateX(0); opacity: 1; }
 }
 
+@keyframes hero-slide-in-bottom {
+  0% { transform: translateY(110%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
 @utility animate-hero-slide-in {
   animation: hero-slide-in 3.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility animate-hero-slide-in-bottom {
+  animation: hero-slide-in-bottom 3.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
