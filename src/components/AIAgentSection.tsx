@@ -8,12 +8,14 @@ export function AIAgentSection() {
         src={plexusTree.url}
         alt=""
         aria-hidden="true"
-        className="pointer-events-none select-none absolute bottom-0 right-0 w-[60%] max-w-[820px] object-contain object-bottom-right"
+        className="pointer-events-none select-none absolute -bottom-6 -right-6 w-[65%] max-w-[880px] object-contain object-bottom-right"
         style={{
           maskImage:
-            "linear-gradient(to top left, #000 40%, rgba(0,0,0,0.7) 65%, transparent 95%)",
+            "linear-gradient(to top left, #000 30%, rgba(0,0,0,0.5) 55%, rgba(0,0,0,0.15) 80%, transparent 100%)",
           WebkitMaskImage:
-            "linear-gradient(to top left, #000 40%, rgba(0,0,0,0.7) 65%, transparent 95%)",
+            "linear-gradient(to top left, #000 30%, rgba(0,0,0,0.5) 55%, rgba(0,0,0,0.15) 80%, transparent 100%)",
+          filter: "blur(6px)",
+          opacity: 0.75,
         }}
       />
       <div className="relative z-10 max-w-5xl">
