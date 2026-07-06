@@ -1,8 +1,7 @@
 export function AIAgentSection() {
   return (
-    <section className="section-wrap relative overflow-hidden" style={{ background: "var(--gradient-section)" }}>
-      <div className="relative z-10 max-w-5xl">
-
+    <section className="section-wrap relative" style={{ background: "var(--gradient-section)" }}>
+      <div className="max-w-5xl">
         <div className="eyebrow mb-6">Sección 06 — Agente de IA</div>
         <h2 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl leading-[1.05] tracking-tight max-w-3xl">
           Tus clientes no deberían{" "}
