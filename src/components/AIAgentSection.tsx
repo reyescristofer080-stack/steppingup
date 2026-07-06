@@ -1,21 +1,6 @@
-import plexusTree from "@/assets/plexus-tree.png.asset.json";
-
 export function AIAgentSection() {
   return (
     <section className="section-wrap relative overflow-hidden" style={{ background: "var(--gradient-section)" }}>
-      {/* Decorative plexus tree — bottom-right, no added light */}
-      <img
-        src={plexusTree.url}
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none select-none absolute bottom-0 right-0 w-[60%] max-w-[820px] object-contain object-bottom-right"
-        style={{
-          maskImage:
-            "linear-gradient(to top left, #000 40%, rgba(0,0,0,0.7) 65%, transparent 95%)",
-          WebkitMaskImage:
-            "linear-gradient(to top left, #000 40%, rgba(0,0,0,0.7) 65%, transparent 95%)",
-        }}
-      />
       <div className="relative z-10 max-w-5xl">
 
         <div className="eyebrow mb-6">Sección 06 — Agente de IA</div>
