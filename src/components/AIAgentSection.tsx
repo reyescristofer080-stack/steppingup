@@ -1,34 +1,23 @@
-import howPlexus from "@/assets/how-plexus.jpg";
+import plexusTree from "@/assets/plexus-tree.png.asset.json";
 
 export function AIAgentSection() {
   return (
     <section className="section-wrap relative overflow-hidden" style={{ background: "var(--gradient-section)" }}>
-      {/* Decorative plexus with corner light — bottom-right */}
-      <div
+      {/* Decorative plexus tree — bottom-right, no added light */}
+      <img
+        src={plexusTree.url}
+        alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 right-0 w-[70%] max-w-[900px] aspect-[3/2]"
+        className="pointer-events-none select-none absolute bottom-0 right-0 w-[60%] max-w-[820px] object-contain object-bottom-right"
         style={{
-          backgroundImage: `url(${howPlexus})`,
-          backgroundSize: "cover",
-          backgroundPosition: "bottom right",
-          backgroundRepeat: "no-repeat",
           maskImage:
-            "radial-gradient(ellipse at bottom right, #000 30%, rgba(0,0,0,0.6) 60%, transparent 90%)",
+            "linear-gradient(to top left, #000 40%, rgba(0,0,0,0.7) 65%, transparent 95%)",
           WebkitMaskImage:
-            "radial-gradient(ellipse at bottom right, #000 30%, rgba(0,0,0,0.6) 60%, transparent 90%)",
-        }}
-      />
-      {/* Corner light bloom — vanishing point */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-24 -right-24 h-[420px] w-[420px] rounded-full"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(0,214,246,0.35) 0%, rgba(0,170,195,0.15) 35%, transparent 70%)",
-          filter: "blur(8px)",
+            "linear-gradient(to top left, #000 40%, rgba(0,0,0,0.7) 65%, transparent 95%)",
         }}
       />
       <div className="relative z-10 max-w-5xl">
+
         <div className="eyebrow mb-6">Sección 06 — Agente de IA</div>
         <h2 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl leading-[1.05] tracking-tight max-w-3xl">
           Tus clientes no deberían{" "}
