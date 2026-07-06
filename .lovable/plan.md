@@ -1,29 +1,25 @@
-## Problema
+## Plan: Decorativo Plexus en Sección 06 — Agente de IA
 
-La imagen actual (`hero-globe.jpg`) es un recorte cuadrado del globo sobre su propio fondo. Al posicionarla absolutamente en el Hero, sus bordes superior e izquierdo quedan visibles como una "caja" pegada encima del fondo de la sección. Ningún overlay con gradiente arregla esto porque el problema es la imagen misma, no el CSS.
+### Contexto actual
+La sección 6 (`AIAgentSection`) tiene un fondo de gradiente oscuro (`linear-gradient(180deg, #000000 0%, #00252A 100%)`) y no cuenta con ningún elemento decorativo en esquinas. La sección 3 (`HowWeWork`) ya implementa un patrón de plexus en su esquina inferior derecha usando `how-plexus.jpg` + máscara radial + bloom de luz.
 
-## Solución
+### Objetivo
+Replicar el efecto de punto de fuga de luz con red de nodos (plexus) en la esquina inferior derecha de la sección 6, manteniendo exactamente el mismo background y composición actuales.
 
-Reemplazar la imagen por un **background art a sangre completa** ya compuesto: un lienzo ancho con el mismo color de fondo que el Hero (`#0a1628` / dark navy del sitio), con el globo wireframe integrado orgánicamente hacia la derecha y desvaneciéndose hacia la izquierda y los bordes mediante el propio render — sin bordes duros.
+### Pasos de implementación
 
-### Pasos
+1. **Reutilizar el asset existente** (`src/assets/how-plexus.jpg`) como imagen de fondo decorativa en la esquina inferior derecha de `AIAgentSection`, o generar una variante de plexus con la misma estética cian-sobre-negro si se prefiere diferenciarla ligeramente de la sección 3.
 
-1. **Generar nueva imagen** `src/assets/hero-bg.jpg` (1920×1024) con prompt dirigido:
-   - Fondo dark navy uniforme idéntico al del sitio.
-   - Globo wireframe cyan/teal anclado al cuadrante inferior-derecho.
-   - Bordes de la imagen ya fundidos al negro/navy (vignette pintada dentro de la imagen, no por CSS).
-   - Sin marca de agua, sin elementos sueltos.
+2. **Posicionar el elemento decorativo** como capa absoluta (`absolute bottom-0 right-0`) con dimensiones proporcionales (aprox. 70% de ancho, aspecto 3:2), igual que en la sección 3.
 
-2. **Actualizar `src/components/Hero.tsx`**:
-   - Cambiar import a `hero-bg.jpg`.
-   - Aplicar como `background-image` de toda la sección (cover, right-center) en lugar de un `<img>` posicionado.
-   - Eliminar el overlay gradient actual (ya no hace falta porque el fade vive dentro de la imagen). Mantener solo un sutil `bg-background/40` sobre el área del texto si hiciera falta para contraste.
-   - Conservar la animación `animate-hero-slide-in` aplicándola al contenedor del background, no a un `<img>` recortado.
+3. **Aplicar máscara radial CSS** (`mask-image: radial-gradient(...)`) para que la imagen se desvanezca suavemente hacia el centro de la sección, creando el efecto de punto de fuga desde la esquina.
 
-3. **Eliminar** el asset viejo `src/assets/hero-globe.jpg`.
+4. **Añadir capa de bloom/glow** con un radial-gradient cian semitransparente y `blur(8px)` en la misma esquina, imitando el punto de origen de la luz del plexus.
 
-4. **Verificar** que en mobile (≤640px) el globo no compita con el texto: usar `background-position: 120% center` en breakpoints pequeños para correrlo fuera de vista o reducir opacidad.
+5. **Asegurar accesibilidad y usabilidad**: ambas capas serán `pointer-events-none` y `aria-hidden="true"`, con `z-index` inferior al contenido principal para no interferir con la interacción.
 
-### Resultado esperado
-
-El globo se ve como parte del fondo de la sección, sin caja ni bordes visibles, fundiéndose naturalmente con el dark navy del resto del Hero.
+### Criterio de éxito
+- El fondo gradiente de la sección 6 permanece intacto.
+- Se observa una red de nodos cian emanando desde la esquina inferior derecha.
+- Existe un resplandor (bloom) en la esquina como punto de fuga de luz.
+- El contenido textual y el botón de la sección siguen siendo perfectamente legibles.
