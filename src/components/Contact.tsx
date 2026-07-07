@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { businessTypes, type BusinessKey } from "./FeatureExplorer";
 import { supabase } from "@/integrations/supabase/client";
+import { ContactPlexus } from "./ContactPlexus";
 
 export function Contact() {
   const [sent, setSent] = useState(false);
