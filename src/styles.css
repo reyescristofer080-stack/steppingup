@@ -208,23 +208,3 @@
   animation: hero-slide-in-bottom 3.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes plexus-draw {
-  to { stroke-dashoffset: 0; }
-}
-
-@keyframes plexus-node {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-.plexus-scale {
-  transform-origin: bottom right;
-}
-@media (max-width: 767px) {
-  .plexus-scale {
-    transform: scale(0.675);
-  }
-}
-
-
-
