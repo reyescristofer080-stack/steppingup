@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { businessTypes, type BusinessKey } from "./FeatureExplorer";
+import { NeuralNetwork } from "./NeuralNetwork";
 import { supabase } from "@/integrations/supabase/client";
+
 
 export function Contact() {
   const [sent, setSent] = useState(false);
