@@ -222,7 +222,7 @@
 }
 @media (max-width: 767px) {
   .plexus-scale {
-    transform: scale(0.45);
+    transform: scale(0.675);
   }
 }
 

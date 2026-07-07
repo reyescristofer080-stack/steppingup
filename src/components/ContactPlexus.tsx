@@ -126,7 +126,7 @@ export function ContactPlexus() {
       aria-hidden="true"
       className="pointer-events-none absolute bottom-0 right-0 z-0 origin-bottom-right"
       style={{
-        width: "min(560px, 62%)",
+        width: "min(840px, 93%)",
         // Scale down on mobile via CSS custom prop below.
       }}
     >
