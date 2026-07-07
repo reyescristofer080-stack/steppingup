@@ -208,8 +208,3 @@
   animation: hero-slide-in-bottom 3.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes nn-breathe {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.94; }
-}
-
