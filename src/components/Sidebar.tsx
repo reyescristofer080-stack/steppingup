@@ -11,7 +11,7 @@ const sections = [
 ];
 
 export function useActiveSection() {
-  const [active, setActive] = useState<string>("mas-que-web");
+  const [active, setActive] = useState<string>(sections[0].id);
 
   useEffect(() => {
     const handler = () => {
@@ -25,9 +25,12 @@ export function useActiveSection() {
       }
       setActive(current);
     };
-    handler();
+    const raf = requestAnimationFrame(handler);
     window.addEventListener("scroll", handler, { passive: true });
-    return () => window.removeEventListener("scroll", handler);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", handler);
+    };
   }, []);
 
   return { active, sections };

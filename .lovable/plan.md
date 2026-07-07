@@ -1,29 +1,34 @@
-## Problema
+## Problem
 
-La imagen actual (`hero-globe.jpg`) es un recorte cuadrado del globo sobre su propio fondo. Al posicionarla absolutamente en el Hero, sus bordes superior e izquierdo quedan visibles como una "caja" pegada encima del fondo de la sección. Ningún overlay con gradiente arregla esto porque el problema es la imagen misma, no el CSS.
+On every page load the left timeline briefly highlights **Section 2 ("Más que una página")** instead of Section 1 ("Inicio"), then snaps to Section 1 after ~1s. This also creates the sensation of the page being "yanked up" when you try to scroll immediately, because the scroll listener re-evaluates and repaints the active state as soon as scroll begins.
 
-## Solución
+## Root cause
 
-Reemplazar la imagen por un **background art a sangre completa** ya compuesto: un lienzo ancho con el mismo color de fondo que el Hero (`#0a1628` / dark navy del sitio), con el globo wireframe integrado orgánicamente hacia la derecha y desvaneciéndose hacia la izquierda y los bordes mediante el propio render — sin bordes duros.
+In `src/components/Sidebar.tsx` the `useActiveSection` hook initializes state with the wrong id:
 
-### Pasos
+```ts
+const [active, setActive] = useState<string>("mas-que-web"); // ← should be "inicio"
+```
 
-1. **Generar nueva imagen** `src/assets/hero-bg.jpg` (1920×1024) con prompt dirigido:
-   - Fondo dark navy uniforme idéntico al del sitio.
-   - Globo wireframe cyan/teal anclado al cuadrante inferior-derecho.
-   - Bordes de la imagen ya fundidos al negro/navy (vignette pintada dentro de la imagen, no por CSS).
-   - Sin marca de agua, sin elementos sueltos.
+So the sidebar renders Section 2 as active on first paint. The scroll handler runs inside `useEffect` after mount and corrects it, which is the delayed "jump" the user sees.
 
-2. **Actualizar `src/components/Hero.tsx`**:
-   - Cambiar import a `hero-bg.jpg`.
-   - Aplicar como `background-image` de toda la sección (cover, right-center) en lugar de un `<img>` posicionado.
-   - Eliminar el overlay gradient actual (ya no hace falta porque el fade vive dentro de la imagen). Mantener solo un sutil `bg-background/40` sobre el área del texto si hiciera falta para contraste.
-   - Conservar la animación `animate-hero-slide-in` aplicándola al contenedor del background, no a un `<img>` recortado.
+The scroll handler itself has a secondary bug that makes the flicker worse: it only assigns `current` when `top - offset <= 0`, so if the top of Section 1 is below the 35% offset line (which it is on load, since Section 1 fills the viewport), the loop keeps the seeded value. Combined with the wrong seed, Section 2 wins until the user scrolls.
 
-3. **Eliminar** el asset viejo `src/assets/hero-globe.jpg`.
+## Fix
 
-4. **Verificar** que en mobile (≤640px) el globo no compita con el texto: usar `background-position: 120% center` en breakpoints pequeños para correrlo fuera de vista o reducir opacidad.
+Edit `src/components/Sidebar.tsx`:
 
-### Resultado esperado
+1. Change the initial state to the first section:
+   ```ts
+   const [active, setActive] = useState<string>(sections[0].id); // "inicio"
+   ```
+2. Make the scroll handler resilient when no section has crossed the offset yet — always fall back to the first section whose top is above the viewport bottom, defaulting to `sections[0].id`. Concretely: iterate and pick the *last* section whose `top - offset <= 0`, and if none match, keep `sections[0].id` (already the initializer). This preserves current behavior mid-page and guarantees "Inicio" on top-of-page.
+3. Run `handler()` once inside a `requestAnimationFrame` after mount so the first measurement happens after layout settles (Hero's mobile entrance animation shifts layout on load), preventing a second late correction.
 
-El globo se ve como parte del fondo de la sección, sin caja ni bordes visibles, fundiéndose naturalmente con el dark navy del resto del Hero.
+No other files need to change. No scroll position is manipulated — the perceived "forced scroll" is the highlight repaint, not an actual scroll, and will disappear once the initial active id is correct.
+
+## Verification
+
+- Reload `/` on desktop and mobile viewports: "Inicio" pill is highlighted from the first frame, no delayed switch.
+- Scroll down slowly: highlight advances Section 1 → 2 → 3 … in order with no snap-back.
+- Click each sidebar item: still scrolls to the correct section.
