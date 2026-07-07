@@ -51,8 +51,10 @@ export function Contact() {
     "w-full bg-[color:var(--background)] border border-[color:var(--border)] rounded-lg px-4 py-3 text-[color:var(--foreground)] placeholder:text-[color:var(--text-soft)]/60 focus:outline-none focus:border-[color:var(--highlight)] transition-colors";
 
   return (
-    <section id="contacto" className="section-wrap relative" style={{ background: "var(--background)" }}>
-      <div className="max-w-4xl">
+    <section id="contacto" className="section-wrap relative overflow-hidden" style={{ background: "var(--background)" }}>
+      <NeuralNetwork />
+      <div className="relative z-10 max-w-4xl">
+
         <div className="eyebrow mb-6">Sección 08 — Contacto</div>
         <h2 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl leading-[1.05] tracking-tight">
           Empezá por una conversación.
