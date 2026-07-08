@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 const sections = [
   { id: "inicio", label: "Inicio" },
-  { id: "mas-que-web", label: "Más que una página" },
+  { id: "mas-que-web", label: "Sección 02 - Más que una página" },
   { id: "como", label: "Cómo trabajamos" },
   { id: "funciones", label: "Funciones" },
   { id: "portafolio", label: "Portafolio" },
@@ -20,9 +20,7 @@ export function useActiveSection() {
     const visibility = new Map<string, number>();
 
     const attach = () => {
-      const targets = sections
-        .map((s) => document.getElementById(s.id))
-        .filter((el): el is HTMLElement => !!el);
+      const targets = sections.map((s) => document.getElementById(s.id)).filter((el): el is HTMLElement => !!el);
       if (targets.length === 0) return;
 
       observer = new IntersectionObserver(
@@ -44,7 +42,7 @@ export function useActiveSection() {
           setActive(bestId);
         },
         // Denser thresholds for smoother, less laggy updates.
-        { threshold: Array.from({ length: 21 }, (_, i) => i / 20) }
+        { threshold: Array.from({ length: 21 }, (_, i) => i / 20) },
       );
 
       for (const el of targets) observer.observe(el);
@@ -113,9 +111,7 @@ export function Sidebar() {
             );
           })}
         </ul>
-        <div className="mt-auto text-[10px] text-[color:var(--text-soft)] opacity-60">
-          San José · Cartago
-        </div>
+        <div className="mt-auto text-[10px] text-[color:var(--text-soft)] opacity-60">San José · Cartago</div>
       </nav>
 
       {/* Mobile trigger */}
