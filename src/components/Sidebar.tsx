@@ -11,23 +11,57 @@ const sections = [
 ];
 
 export function useActiveSection() {
-  const [active, setActive] = useState<string>("mas-que-web");
+  const [active, setActive] = useState<string>("inicio");
 
   useEffect(() => {
-    const handler = () => {
-      const offset = window.innerHeight * 0.35;
-      let current = sections[0].id;
-      for (const s of sections) {
-        const el = document.getElementById(s.id);
-        if (!el) continue;
-        const top = el.getBoundingClientRect().top;
-        if (top - offset <= 0) current = s.id;
-      }
-      setActive(current);
+    // Only observe visibility; NEVER trigger any programmatic scroll from here.
+    let observer: IntersectionObserver | null = null;
+    const visibility = new Map<string, number>();
+
+    const attach = () => {
+      const targets = sections
+        .map((s) => document.getElementById(s.id))
+        .filter((el): el is HTMLElement => !!el);
+      if (targets.length === 0) return;
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            visibility.set(entry.target.id, entry.intersectionRatio);
+          }
+          // Pick the section with highest visibility ratio >= 0.3.
+          let bestId = "inicio";
+          let bestRatio = 0;
+          for (const [id, ratio] of visibility) {
+            if (ratio >= 0.3 && ratio > bestRatio) {
+              bestRatio = ratio;
+              bestId = id;
+            }
+          }
+          setActive(bestId);
+        },
+        { threshold: [0, 0.3, 0.5, 0.75, 1] }
+      );
+
+      for (const el of targets) observer.observe(el);
     };
-    handler();
-    window.addEventListener("scroll", handler, { passive: true });
-    return () => window.removeEventListener("scroll", handler);
+
+    let raf = 0;
+    const start = () => {
+      raf = requestAnimationFrame(attach);
+    };
+
+    if (document.readyState === "complete") {
+      start();
+    } else {
+      window.addEventListener("load", start, { once: true });
+    }
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("load", start);
+      observer?.disconnect();
+    };
   }, []);
 
   return { active, sections };
