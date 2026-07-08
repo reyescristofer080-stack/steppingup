@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import heroBg from "@/assets/hero-bg.jpg";
 
-
-const phrases = [
-  "Tu negocio",
-  "Tus clientes",
-  "Tu imagen de cara al mundo",
-];
+const phrases = ["Tu negocio", "Tus vatos", "Tu imagen de cara al mundo"];
 
 export function Hero() {
   const [idx, setIdx] = useState(0);
@@ -58,7 +53,6 @@ export function Hero() {
         }}
       />
 
-
       <div className="relative z-10 max-w-4xl">
         <div className="eyebrow mb-6">Agencia digital · Costa Rica</div>
 
@@ -73,7 +67,9 @@ export function Hero() {
         </div>
 
         <p className="mt-8 max-w-2xl text-base sm:text-lg text-[color:var(--text-soft)] leading-relaxed">
-          Te entregamos una página web lista casi al instante, te acompañamos de cerca para asegurarnos que le saques provecho al máximo y permanecemos pendientes de tu proceso de modo que nunca te sientas perdido al administrarla.
+          Te entregamos una página web lista casi al instante, te acompañamos de cerca para asegurarnos que le saques
+          provecho al máximo y permanecemos pendientes de tu proceso de modo que nunca te sientas perdido al
+          administrarla.
         </p>
 
         <div className="mt-10 flex flex-wrap gap-4">
