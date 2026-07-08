@@ -50,20 +50,17 @@ export function useActiveSection() {
       for (const el of targets) observer.observe(el);
     };
 
-    let raf = 0;
-    const start = () => {
-      raf = requestAnimationFrame(attach);
-    };
-
-    if (document.readyState === "complete") {
-      start();
-    } else {
-      window.addEventListener("load", start, { once: true });
-    }
+    // Attach right after mount (one frame so layout has settled), instead of
+    // waiting for the window "load" event. Waiting for "load" means the
+    // observer doesn't exist until every image on the page has finished
+    // downloading, which can be several seconds — during that gap the
+    // highlight is frozen, and the first callback that eventually fires can
+    // land on a low-visibility moment and fall back to the initial "inicio"
+    // state, producing a one-time "snap back to Inicio" glitch.
+    const raf = requestAnimationFrame(attach);
 
     return () => {
       cancelAnimationFrame(raf);
-      window.removeEventListener("load", start);
       observer?.disconnect();
     };
   }, []);
