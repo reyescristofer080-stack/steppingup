@@ -27,7 +27,7 @@ export function Hero() {
       {/* Desktop: slides in from the right */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 hidden lg:block animate-hero-slide-in"
+        className="absolute inset-0 hidden lg:block"
         style={{
           backgroundImage: `url(${heroBg})`,
           backgroundSize: "cover",
@@ -39,7 +39,7 @@ export function Hero() {
       {/* Mobile / Tablet: slides in from the bottom */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 lg:hidden animate-hero-slide-in-bottom"
+        className="absolute inset-0 lg:hidden"
         style={{
           backgroundImage: `url(${heroBg})`,
           backgroundSize: "cover",
