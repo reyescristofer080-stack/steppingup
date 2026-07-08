@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 const sections = [
   { id: "inicio", label: "Inicio" },
-  { id: "mas-que-web", label: "Sección 02 - Más que una página" },
+  { id: "mas-que-web", label:Más que una página" },
   { id: "como", label: "Cómo trabajamos" },
   { id: "funciones", label: "Funciones" },
   { id: "portafolio", label: "Portafolio" },
