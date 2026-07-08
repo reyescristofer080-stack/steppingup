@@ -1,29 +1,38 @@
-## Problema
+## Goal
+Upload the current Lovable project codebase to a GitHub repository.
 
-La imagen actual (`hero-globe.jpg`) es un recorte cuadrado del globo sobre su propio fondo. Al posicionarla absolutamente en el Hero, sus bordes superior e izquierdo quedan visibles como una "caja" pegada encima del fondo de la sección. Ningún overlay con gradiente arregla esto porque el problema es la imagen misma, no el CSS.
+## Current state
+- The project already has a `.git` repository.
+- Existing remotes point to Lovable's internal git storage (`origin` and `secondary`); no GitHub remote is configured.
+- Working tree is clean (no uncommitted changes).
 
-## Solución
+## Option A — Lovable Git sync (recommended)
+This is the simplest path and gives you two-way sync between Lovable and GitHub.
 
-Reemplazar la imagen por un **background art a sangre completa** ya compuesto: un lienzo ancho con el mismo color de fondo que el Hero (`#0a1628` / dark navy del sitio), con el globo wireframe integrado orgánicamente hacia la derecha y desvaneciéndose hacia la izquierda y los bordes mediante el propio render — sin bordes duros.
+1. Open the Lovable editor.
+2. Click the **Plus (+)** menu in the chat input → **GitHub** → **Connect project**.
+3. Authorize the Lovable GitHub App.
+4. Select the GitHub account/organization where the repo should live.
+5. Click **Create Repository**.
+6. Lovable will push the full codebase and keep the repo in sync automatically.
 
-### Pasos
+## Option B — Manual `git` push to an existing GitHub repo
+Use this if you already created an empty GitHub repository and want to push the code there.
 
-1. **Generar nueva imagen** `src/assets/hero-bg.jpg` (1920×1024) con prompt dirigido:
-   - Fondo dark navy uniforme idéntico al del sitio.
-   - Globo wireframe cyan/teal anclado al cuadrante inferior-derecho.
-   - Bordes de la imagen ya fundidos al negro/navy (vignette pintada dentro de la imagen, no por CSS).
-   - Sin marca de agua, sin elementos sueltos.
+1. Create an empty repository on GitHub (no README, no `.gitignore`).
+2. Add the GitHub remote to the local repo:
+   ```bash
+   git remote add github https://github.com/<user>/<repo>.git
+   ```
+3. Push the current branch:
+   ```bash
+   git push github main
+   ```
+   (or `master` if that is the current branch).
 
-2. **Actualizar `src/components/Hero.tsx`**:
-   - Cambiar import a `hero-bg.jpg`.
-   - Aplicar como `background-image` de toda la sección (cover, right-center) en lugar de un `<img>` posicionado.
-   - Eliminar el overlay gradient actual (ya no hace falta porque el fade vive dentro de la imagen). Mantener solo un sutil `bg-background/40` sobre el área del texto si hiciera falta para contraste.
-   - Conservar la animación `animate-hero-slide-in` aplicándola al contenedor del background, no a un `<img>` recortado.
+## Notes
+- Lovable Cloud backend settings (Supabase) and environment secrets are **not** exported with the code; they must be reconfigured in the new environment if you self-host.
+- If you choose Option A, do **not** also run Option B, because the Lovable sync will manage the remote.
 
-3. **Eliminar** el asset viejo `src/assets/hero-globe.jpg`.
-
-4. **Verificar** que en mobile (≤640px) el globo no compita con el texto: usar `background-position: 120% center` en breakpoints pequeños para correrlo fuera de vista o reducir opacidad.
-
-### Resultado esperado
-
-El globo se ve como parte del fondo de la sección, sin caja ni bordes visibles, fundiéndose naturalmente con el dark navy del resto del Hero.
+## Which option do you want to use?
+Please confirm **Option A** (Lovable Git sync) or **Option B** (manual push to an existing repo). If Option B, share the GitHub repo URL so the push commands can be prepared.
