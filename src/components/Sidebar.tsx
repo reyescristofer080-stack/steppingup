@@ -12,6 +12,7 @@ const sections = [
 
 export function useActiveSection() {
   const [active, setActive] = useState<string>("inicio");
+  const activeRef = useRef<string>("inicio");
 
   useEffect(() => {
     // Only observe visibility; NEVER trigger any programmatic scroll from here.
@@ -29,18 +30,21 @@ export function useActiveSection() {
           for (const entry of entries) {
             visibility.set(entry.target.id, entry.intersectionRatio);
           }
-          // Pick the section with highest visibility ratio >= 0.3.
-          let bestId = "inicio";
-          let bestRatio = 0;
+          // Fall back to the current active section, not "inicio", so a
+          // low-visibility gap between tall sections doesn't snap the highlight back.
+          let bestId = activeRef.current;
+          let bestRatio = 0.3;
           for (const [id, ratio] of visibility) {
-            if (ratio >= 0.3 && ratio > bestRatio) {
+            if (ratio > bestRatio) {
               bestRatio = ratio;
               bestId = id;
             }
           }
+          activeRef.current = bestId;
           setActive(bestId);
         },
-        { threshold: [0, 0.3, 0.5, 0.75, 1] }
+        // Denser thresholds for smoother, less laggy updates.
+        { threshold: Array.from({ length: 21 }, (_, i) => i / 20) }
       );
 
       for (const el of targets) observer.observe(el);
