@@ -44,7 +44,7 @@ export function MoreThanWeb() {
   return (
     <section id="mas-que-web" className="section-wrap relative" style={{ background: "var(--gradient-section)" }}>
       <div className="max-w-6xl">
-        <div className="eyebrow mb-6">Sección 02 — Más que una página</div>
+        <div className="eyebrow mb-6">&nbsp;MÁS QUE UNA PÁGINA</div>
         <h2 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl leading-[1.05] tracking-tight max-w-4xl">
           Construimos tu página.{" "}
           <span className="text-[color:var(--highlight)]">Después, caminamos contigo.</span>
